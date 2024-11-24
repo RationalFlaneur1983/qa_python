@@ -1,29 +1,30 @@
 import pytest
+
 from main import BooksCollector
 
 class TestBooksCollector:
 
-@pytest.fixture
-def collector(self):
-    return BooksCollector()
+    @pytest.fixture
+    def collector(self):
+        return BooksCollector()
 
 # Тест для add_new_book
-    def test_add_new_book_add_two_books(self):
+    def test_add_new_book_add_two_books(self, collector):
         collector.add_new_book('Гордость, и предубеждение, и зомби')
         collector.add_new_book('Что делать, если ваш кот хочет вас убить')
         assert len(collector.books_genre) == 2
 
-    def test_add_new_book_name_over_40(self):
+    def test_add_new_book_name_over_40(self, collector):
         collector.add_new_book("A" * 41)
         assert "A" * 41 not in collector.books_genre
 
 # Тест для set_book_genre
-    def test_set_book_genre_success(self):
+    def test_set_book_genre_success(self, collector):
         collector.add_new_book('Гордость, и предубеждение, и зомби')
         collector.set_book_genre('Гордость, и предубеждение, и зомби', 'Фантастика')
         assert collector.get_book_genre('Гордость, и предубеждение, и зомби') == 'Фантастика'
 
-    def test_set_book_genre_book_not_exist(self):
+    def test_set_book_genre_book_not_exist(self, collector):
         collector.set_book_genre('Нет такой книги', 'Фантастика')
         assert collector.get_book_genre('Нет такой книги') is None
 
