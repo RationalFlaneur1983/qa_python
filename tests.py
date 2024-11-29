@@ -32,7 +32,7 @@ class TestBooksCollector:
     def test_get_book_genre_existing(self, collector):
         collector.add_new_book('Гордость, и предубеждение, и зомби')
         collector.set_book_genre('Гордость, и предубеждение, и зомби', 'Фантастика')
-        assert collector.get_books_genre()['Гордость, и предубеждение, и зомби'] == 'Фантастика'
+        assert collector.get_books_genre()['Гордость, и предубеждение, и зомби']  == collector.get_book_genre('Гордость, и предубеждение, и зомби') == 'Фантастика'
 
     def test_get_book_genre_not_exist(self, collector):
         collector.add_new_book('Книга без жанра')
@@ -81,5 +81,8 @@ class TestBooksCollector:
         collector.add_new_book('Еще одна книга для массовки')
         collector.add_new_book('Гордость, и предубеждение, и зомби')
         collector.add_new_book('Что делать, если ваш кот хочет вас убить')
+        collector.add_book_in_favorites('Еще одна книга для массовки')
         collector.add_book_in_favorites('Гордость, и предубеждение, и зомби')
-        assert collector.get_list_of_favorites_books() == ['Гордость, и предубеждение, и зомби']
+        collector.add_book_in_favorites('Что делать, если ваш кот хочет вас убить')
+        assert collector.get_list_of_favorites_books() == ['Еще одна книга для массовки', 'Гордость, и предубеждение, и зомби', 'Что делать, если ваш кот хочет вас убить']
+
